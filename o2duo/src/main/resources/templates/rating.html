@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title>Getting Started: Serving Web Content</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <p style="font-size:25px;" th:text="'Success Rating for Actor with Actor Id: ' + ${actorId} + '!'" />
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<div id = "container" style = "width: 550px; height: 400px; margin: 0 auto"></div>
+<script type="text/javascript" th:inline="javascript">
+// Load google charts
+google.charts.load('current', {packages: ['table']}); 
+google.charts.setOnLoadCallback(drawChart);
+
+// Draw the chart and set the chart values
+function drawChart() {
+  var ratingChartData = [[${rate}]];
+  //document.getElementById("demo").innerHTML = ratingChartData;
+  var rateRec = ratingChartData.split(',');
+
+  var dataArray = [];
+  var header= ['Acting Activity\n(over Auditions and Self-Tapes)','Success Rate (%)'];
+  dataArray.push(header);
+  var activity;
+  for (var i = 0; i < rateRec.length - 1; i++) {
+	  activity = rateRec[i].split(':');
+      dataArray.push([activity[0], parseInt(activity[1])]);
+  }
+  //document.getElementById("demo").innerHTML = dataArray;
+  var data = google.visualization.arrayToDataTable(dataArray);
+    
+  // Set chart options
+  var options = {
+      showRowNumber: false,
+      width: '100%', 
+      height: '100%'
+  };
+
+  var chart = new google.visualization.Table(document.getElementById('container'));
+  chart.draw(data, options);
+}
+</script>
+
+<p id="demo"></p>
+</body>
+</html>

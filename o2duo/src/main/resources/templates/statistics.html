@@ -1,0 +1,118 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title>Getting Started: Serving Web Content</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <p style="font-size:25px;" th:text="'Statistics for Actor with Actor Id: ' + ${actorId} + '!'" />
+    
+    <div id="piechart"></div>
+
+<!-- Pie Chart -->
+<!-- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>  -->
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script type="text/javascript" th:inline="javascript">
+// Load google charts
+google.charts.load('current', {
+  callback: drawChart,
+  packages:['controls']
+});
+google.charts.setOnLoadCallback(drawChart);
+
+// Draw the chart and set the chart values
+function drawChart() {
+  var pieChartStatData = [[${statistic}]];
+  //document.getElementById("demo").innerHTML = pieChartStatData;
+  var statisticRec = pieChartStatData.split(',');
+  
+  var dataArray = [];
+  var activity;
+  document.getElementById("demo").innerHTML = dataArray;
+  for (var i = 0; i < statisticRec.length - 1; i++) {
+	  activity = statisticRec[i].split(':');
+      dataArray.push([new Date(activity[0], 0, activity[0].substring(2)), activity[1]]);
+  }
+  
+      var dataTableStat = google.visualization.arrayToDataTable(dataArray);
+      
+      dataTableStat.sort({column: 0});
+	  
+	  var dataByYear = google.visualization.data.group(
+			   dataTableStat,
+			    [{
+			      column: 0,
+			      type: 'string',
+			      modifier: function (value) {
+			        return value.getFullYear().toString();
+			      }
+			    }, 1],
+			    [{
+			      column: 1,
+			      type: 'number',
+			      aggregation: google.visualization.data.count
+			    }]
+			  );
+
+			  var dataAll = google.visualization.data.group(
+			    dataTableStat,
+			    [1],
+			    [{
+			      column: 1,
+			      type: 'number',
+			      aggregation: google.visualization.data.count
+			    }]
+			  );
+
+			  var yearPicker = new google.visualization.ControlWrapper({
+			    controlType: 'CategoryFilter',
+			    containerId: 'categoryFilter_div',
+			    dataTable: dataByYear,
+			    options: {
+			      filterColumnIndex: 0,
+			      ui: {
+			        allowTyping: false,
+			        allowMultiple: false,
+			        caption: 'All Years',
+			        label: '',
+			        labelStacking: 'vertical'
+			      },
+			      useFormattedValue: true
+			    }
+			  });
+			  
+			  google.visualization.events.addListener(yearPicker, 'statechange', function () {
+				    if (yearPicker.getState().selectedValues.length > 0) {
+				      pieChart.setView({
+				        columns: [1, 2],
+				        rows: dataByYear.getFilteredRows([{
+				          column: 0,
+				          value: yearPicker.getState().selectedValues[0]
+				        }])
+				      });
+				      pieChart.setDataTable(dataByYear);
+				    } else {
+				      pieChart.setView(null);
+				      pieChart.setDataTable(dataAll);
+				    }
+				    pieChart.draw();
+				  });
+				  yearPicker.draw();
+
+				  var pieChart = new google.visualization.ChartWrapper({
+				    chartType: 'PieChart',
+				    containerId: 'chart_div',
+				    dataTable: dataAll,
+				    options: {
+				      height: 300
+				    }
+				  });
+				  pieChart.draw();
+				}
+</script>
+<p id="demo"></p>
+<div id="categoryFilter_div"></div>
+<div id="chart_div"></div>
+</body>
+</html>

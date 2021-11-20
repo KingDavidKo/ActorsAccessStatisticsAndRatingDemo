@@ -1,0 +1,10 @@
+HOST=smtp.gmail.com
+USER=davidkmn310@gmail.com
+PWD=xxxxx
+PORT=465
+SSL_FLAG=true
+fromAddress=noreply@actorsaccess.com
+toAddress=supervisor@actorsaccess.com
+DBDriverURL=jdbc:oracle:thin:@//localhost:1521/ORCLPDB1
+DBSchemaUser=ActorsAccessDBUser
+DBSchemaPassword=ActorsAccessDBPassword

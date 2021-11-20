@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>
+      Getting Started: Serving Web Content
+    </title>
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load('visualization', '1', {packages: ['controls']});
+    </script>
+    <script type="text/javascript" th:inline="javascript">
+    
+      function drawVisualization() {
+    	control1 = createDashboard1();
+		
+		google.visualization.events.addListener(control1, 'statechange');
+	  }
+	  
+	  function createDashboard1() {
+  	  	  var tableDashboardData = [[${dashb}]];
+  		  //document.getElementById("demo").innerHTML = tableDashboardData;
+          var dashboardRec = tableDashboardData.split(',');
+
+          var dataArray = [];
+          var header= ['Actor Id', 'Actor Name','Actor Rate'];
+          dataArray.push(header);
+          var rec;
+          for (var i = 0; i < dashboardRec.length - 1; i++) {
+	        rec = dashboardRec[i].split(':');
+            dataArray.push([rec[0], rec[1], parseInt(rec[2])]);
+          }
+          //document.getElementById("demo").innerHTML = dataArray;
+          var data = google.visualization.arrayToDataTable(dataArray);
+          
+          data.sort({column: 2, desc: true});
+          
+        // Define a StringFilter control for the 'Actor Name' column
+        var stringFilter = new google.visualization.ControlWrapper({
+          'controlType': 'StringFilter',
+          'containerId': 'control1',
+          'options': {
+            'filterColumnLabel': 'Actor Name'
+          }
+        });
+        
+        // Define a table visualization
+        var table = new google.visualization.ChartWrapper({
+          'chartType': 'Table',
+          'containerId': 'chart1',
+          'options': {'height': '13em', 'width': '20em'}
+        });
+        
+        // Create the dashboard.
+        var dashboard = new google.visualization.Dashboard(document.getElementById('dashboard')).
+          // Configure the string filter to affect the table contents
+          bind(stringFilter, table).
+          // Draw the dashboard
+          draw(data);
+          
+        return stringFilter;
+      }
+
+      google.setOnLoadCallback(drawVisualization);
+    </script>
+    <p id="demo"></p>
+  </head>
+  <body style="font-family: Arial;border: 0 none;">
+    <p style="font-size:25px;" th:text="'Dashboard for Actors:'" />
+    <div id="dashboard">
+      <table>
+        <tr style='vertical-align: top'>
+          <td style='width: 300px; font-size: 0.9em;'>
+            <div id="control1"></div>
+          </td>
+          <td style='width: 600px'>
+            <div style="float: left;" id="chart1"></div>
+            <div style="float: left;" id="chart2"></div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>
