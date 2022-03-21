@@ -15,7 +15,7 @@ Each audition has the following information: ID, Actor ID, Actor's First Name, A
 
 The program uses Rest API to handle requests. The API allows the retrieval of auditions based on the Audition ID, Last name, First name, Actor ID, or all of the activities ever done from the database. There is a POST request for the actor to log the information, a PUT request to change an activity, and a DELETE request to delete their activity.
 
-Whenever a record is modified in some way (added, updated, or deleted), a notification email is sent to the Actor, Admin, Actor's Agent (or any other pre-configured email), displaying the information they need. At the bottom of the email are hyperlinks that direct the user to view their Dashboard, Ratings and Statistics.
+Whenever a record is modified in some way (added, updated, or deleted), a notification email is sent to the Actor, Admin, Actor's Agent (or any other pre-configured email) through SMTP server, displaying the information they need. At the bottom of the email are hyperlinks that direct the user to view their Dashboard, Ratings and Statistics.
 
 When viewing the Statistics hyperlink, displayed are Pie Chart showing the percentages of each of their completed activities (Audition, Recall, On Hold and Booking). The percentages can be filtered by year. In the Ratings section, a Bar Chart is displayed to show the point accumulation across the years. The Dashboard page illustrates the overall actor's performance in comparison to others based on the collected points.
 
