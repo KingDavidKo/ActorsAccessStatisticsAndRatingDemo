@@ -19,4 +19,4 @@ Whenever a record is modified in some way (added, updated, or deleted), a notifi
 
 When viewing the Statistics hyperlink, displayed are Pie Chart showing the percentages of each of their completed activities (Audition, Recall, On Hold and Booking). The percentages can be filtered by year. In the Ratings section, a Bar Chart is displayed to show the point accumulation across the years. The Dashboard page illustrates the overall actor's performance in comparison to others based on the collected points.
 
-//A configuration text file was created so login information doesn not need to be changed within the code.
+Configuration/Configurations.txt file can be updated, so login/DB/email information does not need to be changed within the code.
