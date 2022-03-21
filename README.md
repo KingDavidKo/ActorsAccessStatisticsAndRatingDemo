@@ -17,6 +17,6 @@ The program uses Rest API to handle requests. The API allows the retrieval of au
 
 Whenever a record is modified in some way (added, updated, or deleted), a notification email is sent to the Actor, Admin, Actor's Agent (or any other pre-configured email) through SMTP server, displaying the information they need. At the bottom of the email are hyperlinks that direct the user to view their Dashboard, Ratings and Statistics.
 
-When viewing the Statistics hyperlink, displayed are Pie Chart showing the percentages of each of their completed activities (Audition, Recall, On Hold and Booking). The percentages can be filtered by year. In the Ratings section, a Bar Chart is displayed to show the point accumulation across the years. The Dashboard page illustrates the overall actor's performance in comparison to others based on the collected points.
+When viewing the Statistics hyperlink, displayed are Pie Chart showing the percentages of each of their completed activities (Audition, Recall, On Hold and Booking). The percentages can be filtered by year. In the Performance page, a Bar Chart is displayed to show the point accumulation across the years. The Rating page demonstrates a success rate in percentage for each actor's activity by using Table Chart. The Dashboard page illustrates two tables of the overall actor's performance in comparison to others based on the collected points.
 
 Configuration/Configurations.txt file can be updated, so login/DB/email information does not need to be changed within the code.
